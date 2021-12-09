@@ -9,29 +9,24 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.HelloController">
    <children>
-      <ImageView fitHeight="537.0" fitWidth="915.0" onMouseClicked="#startGame" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="background" fitHeight="537.0" fitWidth="915.0" onMouseClicked="#startGame" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@bg.jpeg" />
          </image>
       </ImageView>
-      <Label layoutX="406.0" layoutY="58.0" prefHeight="77.0" prefWidth="233.0" text="TAP " textAlignment="CENTER" textFill="#fcf9f9">
+      <Label fx:id="Tap" layoutX="298.0" layoutY="58.0" onMouseClicked="#transition" prefHeight="145.0" prefWidth="305.0" text="TAP &#10;TO PLAY&#10;" textAlignment="CENTER" textFill="#fcf9f9">
          <font>
             <Font name="Arial Black" size="52.0" />
          </font>
       </Label>
-      <Label layoutX="339.0" layoutY="112.0" prefHeight="77.0" prefWidth="291.0" text="TO PLAY" textFill="#fcf9f9">
-         <font>
-            <Font name="Arial Black" size="52.0" />
-         </font>
-      </Label>
+      <ImageView fx:id="pauseButton" fitHeight="98.0" fitWidth="103.0" onMouseClicked="#pauseMenuDisplay" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Screenshot_2021-12-08_at_8.34.10_PM-removebg-preview.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="247.0" fitWidth="537.0" layoutX="46.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@floating_island_big.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="helpButton" fitHeight="70.0" fitWidth="72.0" layoutX="11.0" layoutY="14.0" onMouseClicked="#onHelp" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@help.jpg" />
          </image>
       </ImageView>
       <ImageView fx:id="will" fitHeight="46.0" fitWidth="67.0" layoutX="176.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
@@ -44,29 +39,14 @@
             <Image url="@floating_island.png" />
          </image>
       </ImageView>
-      <Group fx:id="helpDesc" layoutX="379.0" layoutY="524.0">
+      <Group fx:id="pauseMenu" layoutX="387.0" layoutY="490.0">
          <children>
-            <ImageView fitHeight="204.0" fitWidth="367.0" layoutX="-77.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="204.0" fitWidth="367.0" layoutX="-86.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@greenBG.jpeg" />
                </image>
             </ImageView>
             <ImageView fx:id="backButton" fitHeight="50.0" fitWidth="62.0" layoutX="-77.0" layoutY="-11.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@backButton-removebg-preview.jpg" />
-               </image>
-            </ImageView>
-            <Label layoutX="30.0" layoutY="51.0" prefHeight="59.0" prefWidth="138.0" text="WRITE HELP TEXT HERE" />
-         </children>
-      </Group>
-      <Group fx:id="pauseMenu" layoutX="384.0" layoutY="702.0">
-         <children>
-            <ImageView fitHeight="204.0" fitWidth="367.0" layoutX="-77.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@greenBG.jpeg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="62.0" layoutX="-77.0" layoutY="-11.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@backButton-removebg-preview.jpg" />
                </image>
