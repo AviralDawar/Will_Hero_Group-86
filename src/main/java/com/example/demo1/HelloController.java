@@ -48,7 +48,7 @@ public class HelloController implements Initializable {
     @FXML
     private ImageView pauseButton;
 
-//    @FXML
+    //    @FXML
 //    void onHelp(MouseEvent event) {
 //        if(gameStarted){
 //            pauseMenuDisplay();
@@ -57,10 +57,12 @@ public class HelloController implements Initializable {
 //            helpDisplay();
 //        }
 //    }
-@FXML
-void pauseMenuDisplay(){
+    @FXML
+    void pauseMenuDisplay(){
         //ask if the animations in the background should be playing or not.
-        runTranslateTransition(pauseMenu , 0, 500,1);
+        //runTranslateTransition(pauseMenu , 0, 500,1);
+        transition(pauseMenu , 0 , 10 , 1000);
+
     }
     public static TranslateTransition runTranslateTransition(Node n, double x, double y, double duration) {
         TranslateTransition load = new TranslateTransition();
@@ -70,16 +72,15 @@ void pauseMenuDisplay(){
         load.setDuration(Duration.millis(duration));
         return load;
     }
-    public void transition(){
+    public void transition(Node node , int from , int to , int duration){
         FadeTransition fade = new FadeTransition();
-        fade.setDuration(Duration.millis(1000));
-        fade.setFromValue(10);
-        fade.setToValue(0);
+        fade.setDuration(Duration.millis(duration));
+        fade.setFromValue(from);
+        fade.setToValue(to);
         fade.setCycleCount(1);
-
         //the transition will set to be auto reversed by setting this to true
         fade.setAutoReverse(false);
-        fade.setNode(TapToPlay);
+        fade.setNode(node);
         //playing the transition
         fade.play();
 
@@ -87,8 +88,11 @@ void pauseMenuDisplay(){
     }
     @FXML
     void startGame(MouseEvent event) {
+        if(!gameStarted) {
+            transition(TapToPlay, 10, 0, 1000);
+        }
         gameStarted = true;
-        transition();
+
     }
     @FXML
     void newGame(MouseEvent event){
@@ -100,7 +104,7 @@ void pauseMenuDisplay(){
     }
     @FXML
     void back(MouseEvent event){
-
+        transition(pauseMenu , 10 , 0 , 1 );
     }
 
     @Override
@@ -115,3 +119,4 @@ void pauseMenuDisplay(){
     }
 
 }
+
