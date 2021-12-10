@@ -48,6 +48,11 @@ public class HelloController implements Initializable {
     @FXML
     private ImageView pauseButton;
 
+    @FXML
+    private ImageView homeButton;
+
+    @FXML
+    private ImageView saveButton;
     //    @FXML
 //    void onHelp(MouseEvent event) {
 //        if(gameStarted){
@@ -84,6 +89,10 @@ public class HelloController implements Initializable {
         //playing the transition
         fade.play();
 
+
+    }
+    @FXML
+    void saveGame(){
 
     }
     @FXML
