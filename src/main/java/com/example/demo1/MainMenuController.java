@@ -2,7 +2,9 @@ package com.example.demo1;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -11,19 +13,24 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
 
-    Stage stage;
+    private Stage stage;
     private Scene scene;
     private Parent root;
+//    private HelloController hello = new HelloController();
+
 
     @FXML
     private AnchorPane pane;
@@ -60,8 +67,21 @@ public class MainMenuController implements Initializable {
     }
 
     @FXML
-    void newGame(MouseEvent event) {
+    void newGame(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
+        scene = new Scene(root ,915 , 437);
+//        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent keyEvent) {
+//                if (keyEvent.getCode().equals(KeyCode.SPACE)){
+//
+//                }
+//            }
+//        });
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -69,15 +89,25 @@ public class MainMenuController implements Initializable {
         stage = (Stage)pane.getScene().getWindow();
         stage.close();
     }
-
+    private static Boolean helpUP = false;
     @FXML
     void onHelp(MouseEvent event) {
-        transition(helpDesc , 0 , 10 , 1000);
+        //runTranslateTransition(helpDesc, 0, -300, 1);
+        if(helpUP == false) {
+            runTranslateTransition(helpDesc, 0, -300, 1000);
+            helpUP = true;
+        }
+        else{
+            runTranslateTransition(helpDesc , 0 , 300 , 1000);
+            helpUP = false;
+        }
+
     }
 
     @FXML
     void back(MouseEvent event){
-        transition(helpDesc , 10 , 0 , 1);
+        runTranslateTransition(helpDesc , 0 , 300 , 1000);
+        helpUP = false;
     }
     public void transition(Node node , int from , int to , int duration){
         FadeTransition fade = new FadeTransition();
@@ -92,6 +122,14 @@ public class MainMenuController implements Initializable {
         fade.play();
 
 
+    }
+    public void runTranslateTransition(Node n, double x, double y, double duration) {
+        TranslateTransition load = new TranslateTransition();
+        load.setByY(y);
+        load.setByX(x);
+        load.setNode(n);
+        load.setDuration(Duration.millis(duration));
+        load.play();
     }
 
 

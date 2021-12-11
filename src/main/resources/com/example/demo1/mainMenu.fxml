@@ -44,7 +44,12 @@
             <Image url="@hero.png" />
          </image>
       </ImageView>
-      <Group fx:id="helpDesc" layoutX="300.0" layoutY="151.0" opacity="0.0">
+      <ImageView fx:id="island" fitHeight="152.0" fitWidth="231.0" layoutX="411.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@floating_island.png" />
+         </image>
+      </ImageView>
+      <Group fx:id="helpDesc" layoutX="291.0" layoutY="451.0">
          <children>
             <ImageView fitHeight="240.0" fitWidth="513.0" layoutX="-196.0" layoutY="-87.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -63,10 +68,5 @@
             </Label>
          </children>
       </Group>
-      <ImageView fx:id="island" fitHeight="152.0" fitWidth="231.0" layoutX="411.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@floating_island.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>
