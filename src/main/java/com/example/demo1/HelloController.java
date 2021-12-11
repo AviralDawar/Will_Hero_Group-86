@@ -89,7 +89,7 @@ public class HelloController implements Initializable {
 //    }
 
     @FXML
-    private static boolean pauseMenuUp=false;
+    public static boolean pauseMenuUp=false;
     @FXML
     void pauseMenuDisplay(){
         //ask if the animations in the background should be playing or not.
@@ -164,6 +164,7 @@ public class HelloController implements Initializable {
     void removeTapToPlay(MouseEvent event){
         if(!gameStarted) {
             transition(TapToPlay, 10, 0, 1000);
+            transition(score , 0 , 10 , 1000);
         }
         gameStarted = true;
     }
@@ -180,9 +181,11 @@ public class HelloController implements Initializable {
     public static int counter = 0;
     @FXML
     void moveWill(MouseEvent event){
-        runTranslateTransition(will , 80 , 0 , 125  ,false , false);
-        counter++;
-        score.setText(String.valueOf(counter));
+        if(!pauseMenuUp) {
+            runTranslateTransition(will, 80, 0, 125, false, false);
+            counter++;
+            score.setText(String.valueOf(counter));
+        }
     }
 
 }

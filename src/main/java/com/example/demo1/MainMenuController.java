@@ -70,7 +70,9 @@ public class MainMenuController implements Initializable {
     void newGame(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
+        HelloController.pauseMenuUp = false;
+        HelloController.gameStarted = false;
+        HelloController.counter = 0;
         scene = new Scene(root ,915 , 437);
 //        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 //            @Override
