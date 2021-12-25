@@ -17,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -63,29 +64,20 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void loadGame(MouseEvent event) {
-
     }
-
     @FXML
     void newGame(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        Pane root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         HelloController.pauseMenuUp = false;
         HelloController.gameStarted = false;
         HelloController.counter = 0;
+
+//        HelloController.addIsland(root);
         scene = new Scene(root ,915 , 437);
-//        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent keyEvent) {
-//                if (keyEvent.getCode().equals(KeyCode.SPACE)){
-//
-//                }
-//            }
-//        });
         stage.setScene(scene);
         stage.show();
     }
-
     @FXML
     void onExit(MouseEvent event) {
         stage = (Stage)pane.getScene().getWindow();
@@ -96,45 +88,19 @@ public class MainMenuController implements Initializable {
     void onHelp(MouseEvent event) {
         //runTranslateTransition(helpDesc, 0, -300, 1);
         if(helpUP == false) {
-            runTranslateTransition(helpDesc, 0, -300, 1000);
+            Animations.runTranslateTransition(helpDesc, 0, -300, 1000,false,false);
             helpUP = true;
         }
         else{
-            runTranslateTransition(helpDesc , 0 , 300 , 1000);
+            Animations.runTranslateTransition(helpDesc , 0 , 300 , 1000,false,false);
             helpUP = false;
         }
-
     }
-
     @FXML
     void back(MouseEvent event){
-        runTranslateTransition(helpDesc , 0 , 300 , 1000);
+        Animations.runTranslateTransition(helpDesc , 0 , 300 , 1000,false,false);
         helpUP = false;
     }
-    public void transition(Node node , int from , int to , int duration){
-        FadeTransition fade = new FadeTransition();
-        fade.setDuration(Duration.millis(duration));
-        fade.setFromValue(from);
-        fade.setToValue(to);
-        fade.setCycleCount(1);
-        //the transition will set to be auto reversed by setting this to true
-        fade.setAutoReverse(false);
-        fade.setNode(node);
-        //playing the transition
-        fade.play();
-
-
-    }
-    public void runTranslateTransition(Node n, double x, double y, double duration) {
-        TranslateTransition load = new TranslateTransition();
-        load.setByY(y);
-        load.setByX(x);
-        load.setNode(n);
-        load.setDuration(Duration.millis(duration));
-        load.play();
-    }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TranslateTransition translate = new TranslateTransition();

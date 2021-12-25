@@ -3,10 +3,14 @@ package com.example.demo1;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,12 +18,15 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
+        Pane root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
         Scene scene = new Scene(root, 688, 325);
         HelloController hello = new HelloController();
         stage.setTitle("WillTheHero");
         stage.setScene(scene);
         stage.setResizable(false);
+//        System.out.println("b4" + root.getChildren().size());
+//
+//        System.out.println("after" + root.getChildren().size());
         stage.show();
 
         //ksksjhdsk
@@ -56,7 +63,6 @@ public class HelloApplication extends Application {
 
          */
     }
-
     public static void main(String[] args) {
         launch();
     }
