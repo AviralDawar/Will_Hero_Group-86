@@ -6,8 +6,17 @@ public abstract class gameElements extends ImageView {
     protected int[] position;
     protected int X_speed;
     protected int Y_speed;
-    gameElements(){
+    protected ImageView img;
+    gameElements(ImageView img){
+        this.img = img;
+    }
 
+    public void setImg(ImageView img) {
+        this.img = img;
+    }
+
+    public ImageView getImg() {
+        return img;
     }
 
     public int getX_speed() {

@@ -1,10 +1,6 @@
 package com.example.demo1;
 
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,20 +8,14 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -94,7 +84,14 @@ public class HelloController implements Initializable {
     @FXML
     private ImageView tree3;
     @FXML
-    private ImageView coin1;
+    private ImageView c1;
+    @FXML
+    private ImageView c2;
+    @FXML
+    private ImageView c3;
+    @FXML
+    private ImageView tree4;
+
 
 
     @FXML
@@ -152,10 +149,8 @@ public class HelloController implements Initializable {
         gameStarted = true;
     }
 
-    //    @FXML
-//    private final ImageView img = new ImageView();
-    public static ArrayList<Node> allObjects = new ArrayList<Node>();
-    private static Island[] islandArray = new Island[4];
+    public static ArrayList<gameElements> allObjects = new ArrayList<gameElements>();
+    public static Island[] islandArray = new Island[4];
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -163,23 +158,8 @@ public class HelloController implements Initializable {
         Animations.runTranslateTransition(will, 0, -70, 500, true, true);
         Animations.runTranslateTransition(redOrc, 0, -70, 500, true, true);
         Animations.runTranslateTransition(greenOrc, 0, -70, 500, true, true);
-        allObjects.add(island1);
-        allObjects.add(island2);
-        allObjects.add(island3);
-        allObjects.add(island4);
-        allObjects.add(tree1);
-        allObjects.add(tree2);
-        allObjects.add(tree3);
-        allObjects.add(coin1);
-        allObjects.add(greenOrc);
-        allObjects.add(redOrc);
-        allObjects.add(will);
+        Will Will = new Will(will);
 
-//        System.out.println(island1.getLayoutX());
-//        System.out.println(island1.getLayoutY());
-//        System.out.println(island2.getLayoutX());
-//        System.out.println(island3.getLayoutX());
-//        System.out.println(island4.getLayoutX());
         int[] position = new int[]{51 , 286};
         Island Island1 = new Island(0 , position , island1);
         position[0] = 379;
@@ -188,6 +168,35 @@ public class HelloController implements Initializable {
         Island Island3 = new Island(0 , position , island3);
         position[0] = 1135;
         Island Island4 = new Island(0 , position , island4);
+        position[0] = 0;
+        position[1] = 0;
+        //for trees
+        Tree Tree1 = new Tree(position , tree1);
+        Tree Tree2 = new Tree(position , tree2);
+        Tree Tree3 = new Tree(position , tree3);
+        Tree Tree4 = new Tree(position , tree4);
+        //for orcs
+        GreenOrc gOrc = new GreenOrc(0,"green",true,0,0,greenOrc);
+        GreenOrc rOrc = new GreenOrc(0,"red",true,0,0,redOrc);
+        //for coins
+        Coin coin1 = new Coin(position , c1);
+        Coin coin2 = new Coin(position , c2);
+        Coin coin3 = new Coin(position , c3);
+
+        allObjects.add(Island1);
+        allObjects.add(Island2);
+        allObjects.add(Island3);
+        allObjects.add(Island4);
+        allObjects.add(Tree1);
+        allObjects.add(Tree2);
+        allObjects.add(Tree3);
+        allObjects.add(Tree4);
+        allObjects.add(coin1);
+        allObjects.add(coin2);
+        allObjects.add(coin3);
+        allObjects.add(gOrc);
+        allObjects.add(rOrc);
+        allObjects.add(Will);
 
         islandArray[0] = Island1;
         islandArray[1] = Island2;
@@ -198,6 +207,7 @@ public class HelloController implements Initializable {
             @Override
             public void handle(long l) {
                 Animations.checkCollisionOrc();
+                Animations.checkWillFall();
             }
         };
 
@@ -206,34 +216,19 @@ public class HelloController implements Initializable {
 
     public static int counter = 0;
     public static int position = 0;
-
+    //the move back function is implemented on every click to check for collisions and to re position the islands.
     @FXML
     void moveBack(MouseEvent event) {
         if (!pauseMenuUp) {
-            for (Node node : allObjects) {
-                if (node.getId().equals("will"))
+
+            for (gameElements element : allObjects) {
+                if (element instanceof Will)
                     continue;
-                Animations.runTranslateTransition(node, -90, 0, 125, false, false);
+                Animations.runTranslateTransitionElements(element, -90, 0, 125, false, false);
+
             }
             position = position + 90;
-
-//            if((counter+1)%4 == 0 && counter!=0){
-//                island1.setX(640 + position);
-//                //island2.setX();
-//                System.out.println("visible");
-//
-//            }
-//            if(counter%8 == 0 && counter!=0){
-//                island1.setX(2000);
-//
-//            }
-
-
-//            System.out.println(island1.getLayoutX());
-//            System.out.println(will.getLayoutX());
-//            System.out.println(island1.getX());
             counter += 1;
-//            System.out.println(counter);
             score.setText(String.valueOf(counter));
         }
     }

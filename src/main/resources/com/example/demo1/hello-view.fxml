@@ -54,7 +54,7 @@
             <Image url="@Tree1-removebg-preview.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="82.0" fitWidth="60.0" layoutX="777.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="tree4" fitHeight="82.0" fitWidth="60.0" layoutX="777.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Tree4-removebg-preview.png" />
          </image>
@@ -74,17 +74,17 @@
             <Image url="@clickHere.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="667.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="c2" fitHeight="27.0" fitWidth="28.0" layoutX="667.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Coin.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="705.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="c3" fitHeight="27.0" fitWidth="28.0" layoutX="705.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Coin.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="coin1" fitHeight="27.0" fitWidth="28.0" layoutX="629.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="c1" fitHeight="27.0" fitWidth="28.0" layoutX="629.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Coin.png" />
          </image>
