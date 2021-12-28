@@ -151,23 +151,23 @@ public class HelloController implements Initializable {
 
     public static ArrayList<gameElements> allObjects = new ArrayList<gameElements>();
     public static Island[] islandArray = new Island[4];
-
+    private static Will Will;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         Animations.runTranslateTransition(will, 0, -70, 500, true, true);
         Animations.runTranslateTransition(redOrc, 0, -70, 500, true, true);
         Animations.runTranslateTransition(greenOrc, 0, -70, 500, true, true);
-        Will Will = new Will(will);
+        Will = new Will(will);
 
-        int[] position = new int[]{51 , 286};
-        Island Island1 = new Island(0 , position , island1);
+        int[] position = new int[]{0 , 286};
+        Island Island1 = new Island(0 , position , island1 , "island1");
         position[0] = 379;
-        Island Island2 = new Island(0 , position , island2);
+        Island Island2 = new Island(0 , position , island2 , "island2");
         position[0] =746;
-        Island Island3 = new Island(0 , position , island3);
+        Island Island3 = new Island(0 , position , island3 , "island3");
         position[0] = 1135;
-        Island Island4 = new Island(0 , position , island4);
+        Island Island4 = new Island(0 , position , island4 , "island4");
         position[0] = 0;
         position[1] = 0;
         //for trees
@@ -203,6 +203,8 @@ public class HelloController implements Initializable {
         islandArray[2] = Island3;
         islandArray[3] = Island4;
 
+        Island1.position[0] = 51;
+
         AnimationTimer collisionTimer=new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -220,14 +222,20 @@ public class HelloController implements Initializable {
     @FXML
     void moveBack(MouseEvent event) {
         if (!pauseMenuUp) {
+//            System.out.println(Will.getImg().getLayoutX()-52);
+//            System.out.println(islandArray[0].getImg().getTranslateX());
+//            System.out.println(islandArray[0].getImg().getTranslateX() + islandArray[0].getImg().getFitWidth());
 
             for (gameElements element : allObjects) {
                 if (element instanceof Will)
                     continue;
-                Animations.runTranslateTransitionElements(element, -90, 0, 125, false, false);
 
+                Animations.runTranslateTransitionElements(element, -90, 0, 125, false, false);
             }
-            position = position + 90;
+
+            HelloController.islandArray[0].position[0] = HelloController.islandArray[0].position[0] - 90;
+
+            System.out.println(islandArray[0].position[0]);
             counter += 1;
             score.setText(String.valueOf(counter));
         }

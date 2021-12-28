@@ -39,19 +39,6 @@ public class Animations {
         load.setDuration(Duration.millis(duration));
         load.play();
 
-//        if (n instanceof Island || n instanceof Coin || n instanceof Orc)
-//
-//
-//            load.setOnFinished(event -> {
-//                System.out.println("hey");
-//                if (((gameElements) n).getImg().getTranslateX() + ((gameElements) n).getImg().getFitWidth() < 0) {
-//                    System.out.println("backEntered");
-//                    ((gameElements) n).getImg().setTranslateX(((gameElements) n).getImg().getTranslateX() + 90 * 15);
-//                    // if you want randomness of +- x
-//                    int r = 20;
-//                    ((gameElements) n).getImg().setLayoutX((Math.random() - 0.5) * 2 * r);
-//                }
-//            });
     }
     public static void checkCollisionOrc(){
         Will will = null;
@@ -89,9 +76,10 @@ public class Animations {
             System.out.println("Couldn't find" + will);
             return;
         }
-        for(gameElements island : HelloController.islandArray){
-
-        }
+        Boolean willOnIsland = false;
+//        for(gameElements island : HelloController.islandArray){
+//            if()
+//        }
     }
     public static void runTranslateTransitionElements(gameElements n, double x, double y, double duration , boolean infinite , boolean reverse) {
         if (n == null)
@@ -115,10 +103,16 @@ public class Animations {
             load.setOnFinished(event -> {
 
                 if (((gameElements) n).getImg().getTranslateX() + ((gameElements) n).getImg().getFitWidth() < 0) {
-                    ((gameElements) n).getImg().setTranslateX(((gameElements) n).getImg().getTranslateX() + 90 * 15);
+                    int translateBy = (int) (((gameElements) n).getImg().getTranslateX() + 90 * 15);
+                    ((gameElements) n).getImg().setTranslateX(translateBy);
+
                     // if you want randomness of +- x
                     int r = 20;
-                    ((gameElements) n).getImg().setLayoutX((Math.random() - 0.5) * 2 * r);
+                    int rand = (int) ((Math.random() - 0.5) * 2 * r);
+                    ((gameElements) n).getImg().setLayoutX(rand);
+                    if(((Island) n).getName().equals("island1")){
+                        HelloController.islandArray[0].position[0] = translateBy + rand;
+                    }
                 }
             });
     }
