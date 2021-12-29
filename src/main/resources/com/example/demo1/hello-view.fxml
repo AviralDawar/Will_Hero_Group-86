@@ -24,7 +24,7 @@
             <Image url="@Screenshot_2021-12-08_at_8.34.10_PM-removebg-preview.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="island1" fitHeight="107.0" fitWidth="237.0" layoutY="286.0" opacity="0.21" pickOnBounds="true" preserveRatio="true" translateX="51.0">
+      <ImageView fx:id="island1" fitHeight="107.0" fitWidth="237.0" layoutY="286.0" opacity="0.81" pickOnBounds="true" preserveRatio="true" translateX="51.0">
          <image>
             <Image url="@island4.png" />
          </image>
@@ -89,7 +89,7 @@
             <Image url="@Coin.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="will" fitHeight="47.0" fitWidth="86.0" layoutX="149.0" layoutY="244.0" onKeyPressed="#moveBack" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="will" fitHeight="40.0" fitWidth="60.0" layoutX="149.0" layoutY="254.0" onKeyPressed="#moveBack" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@hero.png" />
          </image>

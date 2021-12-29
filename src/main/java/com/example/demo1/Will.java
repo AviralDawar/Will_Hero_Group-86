@@ -25,10 +25,10 @@ public class Will extends gameElements{
         isAlive = alive;
     }
 
-    @Override
-    public void setPosition(int[] position) {
-        super.setPosition(position);
-    }
+//    @Override
+//    public void setPosition(int[] position) {
+//        super.setPosition(position);
+//    }
 
     @Override
     public void setX_speed(int x_speed) {
@@ -64,10 +64,10 @@ public class Will extends gameElements{
         return isAlive;
     }
 
-    @Override
-    public int[] getPosition() {
-        return super.getPosition();
-    }
+//    @Override
+//    public int[] getPosition() {
+//        return super.getPosition();
+//    }
 
     public Boolean getHasResurrected() {
         return hasResurrected;

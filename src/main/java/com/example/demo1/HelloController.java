@@ -151,7 +151,7 @@ public class HelloController implements Initializable {
 
     public static ArrayList<gameElements> allObjects = new ArrayList<gameElements>();
     public static Island[] islandArray = new Island[4];
-    private static Will Will;
+    public static Will Will;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -161,13 +161,13 @@ public class HelloController implements Initializable {
         Will = new Will(will);
 
         int[] position = new int[]{0 , 286};
-        Island Island1 = new Island(0 , position , island1 , "island1");
+        Island Island1 = new Island(0 , position , island1 , "island1" , 51);
         position[0] = 379;
-        Island Island2 = new Island(0 , position , island2 , "island2");
+        Island Island2 = new Island(0 , position , island2 , "island2" , 379);
         position[0] =746;
-        Island Island3 = new Island(0 , position , island3 , "island3");
+        Island Island3 = new Island(0 , position , island3 , "island3" , 766);
         position[0] = 1135;
-        Island Island4 = new Island(0 , position , island4 , "island4");
+        Island Island4 = new Island(0 , position , island4 , "island4",1082);
         position[0] = 0;
         position[1] = 0;
         //for trees
@@ -202,14 +202,12 @@ public class HelloController implements Initializable {
         islandArray[1] = Island2;
         islandArray[2] = Island3;
         islandArray[3] = Island4;
-
-        Island1.position[0] = 51;
-
+        System.out.println(Will.getImg().getLayoutX());
         AnimationTimer collisionTimer=new AnimationTimer() {
             @Override
             public void handle(long l) {
                 Animations.checkCollisionOrc();
-                Animations.checkWillFall();
+                //Animations.checkWillFall();
             }
         };
 
@@ -229,13 +227,18 @@ public class HelloController implements Initializable {
             for (gameElements element : allObjects) {
                 if (element instanceof Will)
                     continue;
-
                 Animations.runTranslateTransitionElements(element, -90, 0, 125, false, false);
             }
-
-            HelloController.islandArray[0].position[0] = HelloController.islandArray[0].position[0] - 90;
-
-            System.out.println(islandArray[0].position[0]);
+//            for(Island island : islandArray) {
+//                island.position[0] = island.position[0] - 90;
+//                System.out.println(island.position[0]);
+//                System.out.println(island.position[0] + island.getFitWidth());
+//            }
+            islandArray[0].set_X(islandArray[0].get_X() -90);
+            islandArray[1].set_X(islandArray[1].get_X() -90);
+            islandArray[2].set_X(islandArray[2].get_X() -90);
+            islandArray[3].set_X(islandArray[3].get_X() -90);
+            Animations.checkWillFall();
             counter += 1;
             score.setText(String.valueOf(counter));
         }

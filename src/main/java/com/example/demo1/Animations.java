@@ -65,21 +65,21 @@ public class Animations {
             // fade_out_animation.onFinished(() -> {orc.dead = false; orc.teleportToNewLocation()})
             // System.out.println("Collision detected!!");
     }
+
     public static void checkWillFall(){
-        Will will = null;
-        for(int i = 0 ; i<HelloController.allObjects.size() ; i ++) {
-            gameElements n = HelloController.allObjects.get(i);
-            if (n instanceof Will)
-                will = (Will)n;
+        if(HelloController.Will.getLayoutY() == 0) {
+            //System.out.println("entered");
+            Boolean willOnIsland = false;
+            for (Island island : HelloController.islandArray) {
+                if(HelloController.Will.getImg().getLayoutX()>=island.get_X() && HelloController.Will.getImg().getLayoutX()<=island.get_X() + island.getImg().getFitWidth()){
+                    willOnIsland = true;
+                    break;
+                }
+            }
+            if(!willOnIsland){
+                willHasDied();
+            }
         }
-        if (will == null) {
-            System.out.println("Couldn't find" + will);
-            return;
-        }
-        Boolean willOnIsland = false;
-//        for(gameElements island : HelloController.islandArray){
-//            if()
-//        }
     }
     public static void runTranslateTransitionElements(gameElements n, double x, double y, double duration , boolean infinite , boolean reverse) {
         if (n == null)
@@ -98,22 +98,24 @@ public class Animations {
         load.setDuration(Duration.millis(duration));
         load.play();
 
-        if (n instanceof Island)
-
+        if (n instanceof Island) {
             load.setOnFinished(event -> {
-
                 if (((gameElements) n).getImg().getTranslateX() + ((gameElements) n).getImg().getFitWidth() < 0) {
                     int translateBy = (int) (((gameElements) n).getImg().getTranslateX() + 90 * 15);
                     ((gameElements) n).getImg().setTranslateX(translateBy);
-
-                    // if you want randomness of +- x
                     int r = 20;
                     int rand = (int) ((Math.random() - 0.5) * 2 * r);
                     ((gameElements) n).getImg().setLayoutX(rand);
-                    if(((Island) n).getName().equals("island1")){
-                        HelloController.islandArray[0].position[0] = translateBy + rand;
-                    }
+                    ((Island) n).set_X(translateBy + rand);
                 }
             });
+        }
     }
+    public static void  willHasDied(){
+
+    }
+    public static void respawnWill(){
+        
+    }
+
 }

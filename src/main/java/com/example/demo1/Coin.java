@@ -3,6 +3,7 @@ package com.example.demo1;
 import javafx.scene.image.ImageView;
 
 public class Coin extends gameElements{
+    public int[] position;
     Coin(int[] position , ImageView img){
         super(img);
         this.position = position;

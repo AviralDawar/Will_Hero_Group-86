@@ -3,6 +3,7 @@ package com.example.demo1;
 import javafx.scene.image.ImageView;
 
 public class GreenOrc extends Orc{
+    public int[] position;
     GreenOrc(int area , String type , Boolean alive , int x , int y , ImageView img){
         super(img);
         this.area = area;
@@ -17,5 +18,7 @@ public class GreenOrc extends Orc{
         return super.getImg();
     }
 
-
+    public int[] getPosition() {
+        return position;
+    }
 }
