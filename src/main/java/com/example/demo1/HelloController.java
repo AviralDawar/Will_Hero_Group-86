@@ -1,6 +1,7 @@
 package com.example.demo1;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -56,7 +57,7 @@ public class HelloController implements Initializable {
     private ImageView background;
 
     @FXML
-    private Group pauseMenu;
+    private Group pause_Menu;
 
     @FXML
     private ImageView backButton;
@@ -91,18 +92,22 @@ public class HelloController implements Initializable {
     private ImageView c3;
     @FXML
     private ImageView tree4;
-
-
+    @FXML
+    private Group respawn_Menu;
+    @FXML
+    private ImageView greenOrc1;
+    @FXML
+    private ImageView redOrc1;
 
     @FXML
-    void pauseMenuDisplay() {
+    public void pauseMenuDisplay() {
         //ask if the animations in the background should be playing or not.
         //runTranslateTransition(pauseMenu , 0, 500,1);
         if (!pauseMenuUp) {
-            Animations.runTranslateTransition(pauseMenu, 0, -300, 1000, false, false);
+            Animations.runTranslateTransition(pauseMenu.pauseMenu, 0, -300, 1000, false, false);
             pauseMenuUp = true;
         } else {
-            Animations.runTranslateTransition(pauseMenu, 0, 300, 1000, false, false);
+            Animations.runTranslateTransition(pauseMenu.pauseMenu, 0, 300, 1000, false, false);
             pauseMenuUp = false;
         }
     }
@@ -137,7 +142,7 @@ public class HelloController implements Initializable {
 
     @FXML
     void back(MouseEvent event) {
-        Animations.runTranslateTransition(pauseMenu, 0, 300, 1000, false, false);
+        Animations.runTranslateTransition(pauseMenu.pauseMenu, 0, 300, 1000, false, false);
     }
 
     @FXML
@@ -152,32 +157,44 @@ public class HelloController implements Initializable {
     public static ArrayList<gameElements> allObjects = new ArrayList<gameElements>();
     public static Island[] islandArray = new Island[4];
     public static Will Will;
+    public static PauseMenu pauseMenu;
+    public static RespawnMenu respawnMenu;
+    public static GreenOrc gOrc1;
+    public static redOrc rOrc1;
+    public static GreenOrc gOrc2;
+    public static redOrc rOrc2;
+    public static Orc[] orcArrayList = new Orc[4];
+    public static TranslateTransition[] bobbing = new TranslateTransition[3];
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Animations.runTranslateTransition(will, 0, -70, 500, true, true);
-        Animations.runTranslateTransition(redOrc, 0, -70, 500, true, true);
-        Animations.runTranslateTransition(greenOrc, 0, -70, 500, true, true);
+        bobbing[0] = Animations.runTranslateTransition(will, 0, -100, 500, true, true);
+        bobbing[1] = Animations.runTranslateTransition(redOrc, 0, -95, 1000, true, true);
+        bobbing[2] = Animations.runTranslateTransition(greenOrc, 0, -95, 1000, true, true);
+
         Will = new Will(will);
+        pauseMenu = new PauseMenu(pause_Menu);
+        respawnMenu = new RespawnMenu(respawn_Menu);
 
         int[] position = new int[]{0 , 286};
         Island Island1 = new Island(0 , position , island1 , "island1" , 51);
-        position[0] = 379;
+
         Island Island2 = new Island(0 , position , island2 , "island2" , 379);
-        position[0] =746;
+
         Island Island3 = new Island(0 , position , island3 , "island3" , 766);
-        position[0] = 1135;
+
         Island Island4 = new Island(0 , position , island4 , "island4",1082);
-        position[0] = 0;
-        position[1] = 0;
         //for trees
         Tree Tree1 = new Tree(position , tree1);
         Tree Tree2 = new Tree(position , tree2);
         Tree Tree3 = new Tree(position , tree3);
         Tree Tree4 = new Tree(position , tree4);
         //for orcs
-        GreenOrc gOrc = new GreenOrc(0,"green",true,0,0,greenOrc);
-        GreenOrc rOrc = new GreenOrc(0,"red",true,0,0,redOrc);
+        gOrc1 = new GreenOrc(0,"green",true,0,0,greenOrc);
+        gOrc2 = new GreenOrc(0,"green",true,0,0,greenOrc1);
+        rOrc1 = new redOrc(0,"red",true,0,0,redOrc);
+        rOrc2 = new redOrc(0,"red",true,0,0,redOrc1);
+
         //for coins
         Coin coin1 = new Coin(position , c1);
         Coin coin2 = new Coin(position , c2);
@@ -194,53 +211,42 @@ public class HelloController implements Initializable {
         allObjects.add(coin1);
         allObjects.add(coin2);
         allObjects.add(coin3);
-        allObjects.add(gOrc);
-        allObjects.add(rOrc);
+        allObjects.add(gOrc1);
+        allObjects.add(rOrc1);
         allObjects.add(Will);
+
+        orcArrayList[0] = gOrc1;
+        orcArrayList[1] = gOrc2;
+        orcArrayList[2] = rOrc1;
+        orcArrayList[3] = rOrc2;
+
 
         islandArray[0] = Island1;
         islandArray[1] = Island2;
         islandArray[2] = Island3;
         islandArray[3] = Island4;
-        System.out.println(Will.getImg().getLayoutX());
         AnimationTimer collisionTimer=new AnimationTimer() {
             @Override
             public void handle(long l) {
-                Animations.checkCollisionOrc();
-                //Animations.checkWillFall();
+                try {
+                    Animations.checkCollisionOrc();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         };
-
         collisionTimer.start();
+        new Thread(() -> Animations.checkWillFall()).start();
+        new Thread(() -> Animations.checkOrcFall()).start();
     }
-
+    public static Boolean clickToPlayActivated = true;
     public static int counter = 0;
     public static int position = 0;
     //the move back function is implemented on every click to check for collisions and to re position the islands.
     @FXML
     void moveBack(MouseEvent event) {
-        if (!pauseMenuUp) {
-//            System.out.println(Will.getImg().getLayoutX()-52);
-//            System.out.println(islandArray[0].getImg().getTranslateX());
-//            System.out.println(islandArray[0].getImg().getTranslateX() + islandArray[0].getImg().getFitWidth());
-
-            for (gameElements element : allObjects) {
-                if (element instanceof Will)
-                    continue;
-                Animations.runTranslateTransitionElements(element, -90, 0, 125, false, false);
-            }
-//            for(Island island : islandArray) {
-//                island.position[0] = island.position[0] - 90;
-//                System.out.println(island.position[0]);
-//                System.out.println(island.position[0] + island.getFitWidth());
-//            }
-            islandArray[0].set_X(islandArray[0].get_X() -90);
-            islandArray[1].set_X(islandArray[1].get_X() -90);
-            islandArray[2].set_X(islandArray[2].get_X() -90);
-            islandArray[3].set_X(islandArray[3].get_X() -90);
-            Animations.checkWillFall();
-            counter += 1;
-            score.setText(String.valueOf(counter));
-        }
+        Animations.move_Back(-90 , 125);
+        counter += 1;
+        score.setText(String.valueOf(counter));
     }
 }

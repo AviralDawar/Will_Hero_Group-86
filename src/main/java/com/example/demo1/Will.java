@@ -6,7 +6,7 @@ public class Will extends gameElements{
     private int currentCoins;
     private int currentScore;
     private Boolean hasResurrected;
-    private Boolean isAlive;
+    public Boolean isAlive;
     private Boolean hasWeapon;
 
     public Will(ImageView img){
@@ -16,7 +16,6 @@ public class Will extends gameElements{
         this.hasResurrected = false;
         this.isAlive = true;
         this.hasWeapon = false;
-
     }
 
 

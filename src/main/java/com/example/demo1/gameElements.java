@@ -7,6 +7,7 @@ public abstract class gameElements extends ImageView {
     protected int X_speed;
     protected int Y_speed;
     protected ImageView img;
+    protected Boolean isAlive = true;
     gameElements(ImageView img){
         this.img = img;
     }
@@ -44,5 +45,13 @@ public abstract class gameElements extends ImageView {
     }
     public void collide(){
 
+    }
+
+    public void setAlive(Boolean alive) {
+        this.isAlive = alive;
+    }
+
+    public Boolean getAlive() {
+        return isAlive;
     }
 }

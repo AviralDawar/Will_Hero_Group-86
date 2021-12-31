@@ -8,11 +8,21 @@ public class redOrc extends Orc{
         super(img);
         this.area = area;
         this.type = type;
-        this.alive = alive;
+        this.isAlive = alive;
         this.position =new int[]{x,y};
     }
     @Override
     public ImageView getImg() {
         return super.getImg();
+    }
+
+    @Override
+    public Boolean getAlive() {
+        return super.getAlive();
+    }
+
+    @Override
+    public void setAlive(Boolean alive) {
+        super.setAlive(alive);
     }
 }
