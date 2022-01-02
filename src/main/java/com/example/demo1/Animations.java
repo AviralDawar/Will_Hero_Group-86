@@ -73,18 +73,23 @@ public class Animations {
         Boolean orcPushed = false;
         for(Orc orc : HelloController.orcArrayList) {
             if (HelloController.Will.getImg().getBoundsInParent().intersects(orc.getImg().getBoundsInParent())) {
-                if (HelloController.Will.getImg().getTranslateY() > orc.getImg().getTranslateY() + 28 && !(HelloController.Will.getImg().getTranslateX() + HelloController.Will.getImg().getLayoutX() < orc.getImg().getTranslateX() + orc.getImg().getLayoutX() - 30)) {
-                    deathByOrc = true;
-                    willHasDied(2500);
-                } else if (HelloController.Will.getImg().getTranslateX() + HelloController.Will.getImg().getLayoutX() < orc.getImg().getTranslateX() + orc.getImg().getLayoutX() - 30) {
-//                    System.out.println("orcPushed" + orc.getType());
-                    pushOrc(orc);
-                } else {
-                    pushOrc(orc);
+                if(!HelloController.Will.getHasWeapon() || (HelloController.Will.getHasWeapon() && HelloController.Will.getWeapon().getPower() == 0)) {
+                    if (HelloController.Will.getImg().getTranslateY() > orc.getImg().getTranslateY() + 28 && !(HelloController.Will.getImg().getTranslateX() + HelloController.Will.getImg().getLayoutX() < orc.getImg().getTranslateX() + orc.getImg().getLayoutX() - 30)) {
+                        deathByOrc = true;
+                        HelloController.clickToPlayActivated = false;
+                        willHasDied(2500);
+                    } else if (HelloController.Will.getImg().getTranslateX() + HelloController.Will.getImg().getLayoutX() < orc.getImg().getTranslateX() + orc.getImg().getLayoutX() - 30) {
+                        //                    System.out.println("orcPushed" + orc.getType());
+                        pushOrc(orc);
+                    } else {pushOrc(orc);}
+                }
+                else{
+                    orc.getImg().setTranslateX(90*15);
                 }
             }
         }
     }
+
     public static void checkCoinCollision(){
         for(Coin coin:HelloController.coinList) {
             if (HelloController.Will.getImg().getBoundsInParent().intersects(coin.getImg().getBoundsInParent())) {
@@ -104,11 +109,11 @@ public class Animations {
     }
     public static void checkWillFall(){
         while (HelloController.Will.isAlive) {
-            if (HelloController.Will.getImg().getTranslateY() > -5) {
+            if (HelloController.Will.getImg().getTranslateY() > -3) {
                 Boolean willOnIsland = false;
                 for (Island island : HelloController.islandArray) {
                     ImageView will = HelloController.Will.getImg();
-                    if (will.getLayoutX() + will.getFitWidth() - 23>= island.getImg().getLayoutX() + island.getImg().getTranslateX() && will.getLayoutX() + 26 <= (island.getImg().getLayoutX() + island.getImg().getTranslateX() + island.getImg().getFitWidth())) {
+                    if (will.getLayoutX() + will.getFitWidth() - 13>= island.getImg().getLayoutX() + island.getImg().getTranslateX() && will.getLayoutX()  <= (island.getImg().getLayoutX() + island.getImg().getTranslateX() + island.getImg().getFitWidth())) {
                         willOnIsland = true;
                         break;
                     }
@@ -141,9 +146,9 @@ public class Animations {
             }
         }
     }
-    public static void runTranslateTransitionElements(gameElements node, double x, double y, double duration , boolean infinite , boolean reverse) {
+    public static TranslateTransition runTranslateTransitionElements(gameElements node, double x, double y, double duration , boolean infinite , boolean reverse) {
         if (node == null)
-            return;
+            return null;
 
         TranslateTransition load = new TranslateTransition();
         load.setByY(y);
@@ -169,17 +174,26 @@ public class Animations {
                     if(!(node instanceof Island)){
                         rand = -6;
                     }
+                    if(node instanceof Coin){
+                        node.setVisible(true);
+                        node.setOpacity(10);
+                    }
+                    if(node instanceof WeaponChest){
+                        Image img = new Image("file:src/main/resources/com/example/demo1/ChestClosed.png");
+                        node.getImg().setImage(img);
+                    }
                     n.setLayoutX(rand);
                     n.setTranslateX(translateBy + rand);
                 }
             });
         }
+        return load;
     }
     public static void  willHasDied(int duration) {
         if (HelloController.Will.isAlive) {
             HelloController.Will.setAlive(false);
             Timeline temp = null;
-
+            //System.out.println("hi");
             for(TranslateTransition bobbing : HelloController.bobbing){
                 bobbing.stop();
                 temp = new Timeline(new KeyFrame(Duration.millis(duration), ae -> {HelloController.Will.getImg().setTranslateY(0);
@@ -193,8 +207,9 @@ public class Animations {
                 Animations.runTranslateTransition(HelloController.respawnMenu.getRespawnMenu(), 0, -550, 1000, false, false);
                 t.setOnFinished(actionEvent2 -> {
                     move_Back(-360 , 1);
-                    HelloController.Will.setAlive(true);
+
                 });});
+
 
         }
     }
@@ -205,6 +220,8 @@ public class Animations {
         if(!deathByOrc) {
             runTranslateTransition(orc.getImg(), 200, 0, 300, false, false);
             deathByOrc=false;
+            orcToOrc(orc);
+
         }
     }
     public static void move_Back(int moveBy , int duration){
@@ -233,7 +250,20 @@ public class Animations {
 
     }
     public static void orcFall(Orc orc){
+
+        //orc.getImg().setTranslateY(30);
+//        TranslateTransition t = runTranslateTransitionElements(orc , 0 , 300 , 500 , false , false);
+//        t.setOnFinished(actionEvent -> {orc.getImg().setTranslateX(90*15);
+//                                        orc.getImg().setTranslateY(-330);});
+//        for(int i = 0 ; i<140 ; i++){
+//            orc.getImg().setTranslateY(orc.getImg().getTranslateY() + 1);
+//        }
         orc.getImg().setTranslateX(90*15);
+        //orc.getImg().setTranslateY(-30);
+//        for(int i = 0 ; i<300 ; i++){
+//            orc.getImg().setTranslateY(orc.getImg().getTranslateY() -1);
+//        }
+
         //TranslateTransition t = runTranslateTransition(orc.getImg() , 100 , 0 , 1 , false , false);
 //        t.setOnFinished(event -> {orc.getImg().setTranslateX(90*15);});
     }
@@ -247,6 +277,16 @@ public class Animations {
         st.setToY(setToY);
         st.play();
         return st;
+    }
+
+    public static void orcToOrc(Orc orc){
+        for(Orc object : HelloController.orcArrayList){
+            if(!object.getType().equals(orc.getType())){
+                if(object.getImg().getBoundsInParent().intersects(orc.getImg().getBoundsInParent())){
+                    runTranslateTransition(object.getImg(), 250, 0, 300, false, false);
+                }
+            }
+        }
     }
 
 }

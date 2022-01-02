@@ -16,9 +16,10 @@ public class WeaponChest extends gameElements{
 
     public WeaponChest(ImageView weaponChest) {
         super(weaponChest);
-        jpg = new Image("file:src/main/resources/com/example/demo1/WeaponSword.png");
+        jpg = new Image("file:src/main/resources/com/example/demo1/WeaponAxe.png");
         hammerImg = new ImageView(jpg);
         hammer = new Hammer(hammerImg,"hammer" ,100 , jpg);
+        jpg = new Image("file:src/main/resources/com/example/demo1/WeaponSword.png");
         swordImg = new ImageView(jpg);
         sword = new Sword(swordImg,"sword" , 100 , jpg);
     }

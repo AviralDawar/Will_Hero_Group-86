@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class HelloController implements Initializable {
     static {
         gameStarted = false;
     }
+    @FXML
+    private Label resurrectLabel;
     @FXML
     private ImageView weaponChest;
     @FXML
@@ -119,6 +122,9 @@ public class HelloController implements Initializable {
     private ImageView tree5;
     @FXML
     private ImageView tree6;
+    @FXML
+    private ImageView TNT;
+
 
     @FXML
     private Group respawn_Menu;
@@ -131,7 +137,12 @@ public class HelloController implements Initializable {
 
     @FXML
     private ImageView wpn;
-
+    @FXML
+    private ImageView hammerButton;
+    @FXML
+    private Rectangle swordButton;
+    @FXML
+    private ImageView bossOrc;
     @FXML
     public void pauseMenuDisplay() {
         //ask if the animations in the background should be playing or not.
@@ -205,6 +216,8 @@ public class HelloController implements Initializable {
     public static CoinChest coin_Chest;
     private static Coin big_coin;
     public static Weapon weapon;
+    public static TNT tnt;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -225,12 +238,14 @@ public class HelloController implements Initializable {
         coin_Chest = new CoinChest(coinChest);
         weapon = new Weapon(wpn , null , 0 , null);
 
+
         int[] position = new int[]{0 , 286};
         Island Island1 = new Island(0 , position , island1 , "island1" , 51);
         Island Island2 = new Island(0 , position , island2 , "island2" , 379);
         Island Island3 = new Island(0 , position , island3 , "island3" , 766);
         Island Island4 = new Island(0 , position , island4 , "island4",1082);
 
+        tnt = new TNT(position , TNT);
 
         //for trees
         Tree Tree1 = new Tree(position , tree1);
@@ -242,10 +257,10 @@ public class HelloController implements Initializable {
 
 
         //for orcs
-        gOrc1 = new GreenOrc(0,"green",true,0,0,greenOrc);
-        gOrc2 = new GreenOrc(0,"green",true,0,0,greenOrc1);
-        rOrc1 = new redOrc(0,"red",true,0,0,redOrc);
-        rOrc2 = new redOrc(0,"red",true,0,0,redOrc1);
+        gOrc1 = new GreenOrc(0,"green1",true,0,0,greenOrc);
+        gOrc2 = new GreenOrc(0,"green2",true,0,0,greenOrc1);
+        rOrc1 = new redOrc(0,"red1",true,0,0,redOrc);
+        rOrc2 = new redOrc(0,"red2",true,0,0,redOrc1);
 
         //for coins
         Coin coin1 = new Coin(position , c1);
@@ -261,6 +276,7 @@ public class HelloController implements Initializable {
         coinList[3] =coin4;
         coinList[4] =coin5;
 
+        allObjects.add(tnt);
         allObjects.add(Island1);
         allObjects.add(Island2);
         allObjects.add(Island3);
@@ -305,6 +321,7 @@ public class HelloController implements Initializable {
                     Animations.checkCollisionOrc();
                     Animations.checkCoinCollision();
                     Animations.checkChestCollision();
+                    //Animations.orcToOrc();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -321,28 +338,71 @@ public class HelloController implements Initializable {
     //the move back function is implemented on every click to check for collisions and to re position the islands.
     @FXML
     void moveBack(MouseEvent event) {
-        Animations.move_Back(-90 , 125);
-        counter += 1;
-        score.setText(String.valueOf(counter));
+        if(clickToPlayActivated) {
+            Animations.move_Back(-90, 125);
+            if(Will.getHasWeapon()){
+                if(Will.getWeapon().getPower() != 0) {
+                    Will.getWeapon().setPower(Will.getWeapon().getPower() - 10);
+                }
+                else{
+                    Image img = new Image("file:src/main/resources/com/example/demo1/WeaponBrokenSword.png");
+                    //System.out.println("entered else");
+                    Will.getWeapon().getImg().setImage(img);
+                    Will.removeFromList(Will.getWeapon());
+                }
+            }
+
+            counter += 1;
+            score.setText(String.valueOf(counter));
+            if(counter == 25|| counter == 50 || counter == 75){
+                int x = 0;
+                int y = 0;
+                for(Island island : islandArray){
+                    if(island.getImg().getTranslateX()>800){
+                        x = (int) (island.getImg().getTranslateX() + island.getImg().getFitWidth()/2);
+                        y = 252;
+                        System.out.println("entered if" +island);
+                        break;
+                    }
+                }
+                //System.out.println("TNT TRYING");
+                tnt.getImg().setLayoutY(y);
+                tnt.getImg().setLayoutX(x);
+
+
+            }
+        }
     }
 
+    public static Boolean clickToPlayActivate = true;
     @FXML
     void resurrect(){
-        Animations.runTranslateTransition(respawnMenu.getRespawnMenu() , 0 ,550 , 100 , false , false);
+        if(Will.getCurrentCoins()>=10) {
+            Will.setAlive(true);
+            clickToPlayActivated = true;
+            Animations.runTranslateTransition(
+                    respawnMenu.getRespawnMenu(), 0, 550, 100, false, false);
+        }
+        else{
+            resurrectLabel.setText("CAN'T RESURRECT WITH <=10 COINS , PRESS THE HOME BUTTON TO GO TO THE MAIN MENU");
+        }
+
+
     }
     public static int coinCounter = 0;
     static void updateCoins(Coin coin){
         if(!coin.thisCoinCollected) {
+            coin.setThisCoinCollected(true);
             coinCounter++;
-            coin.getImg().setTranslateX(90*15);
+            coin.getImg().setVisible(false);
             int r = 4;
             int rand = (int) ((Math.random() - 0.5) * 2 * r);
             //coin.getImg().setTranslateY(rand);
             coins_collected.getCoinsCollected().setText(String.valueOf(coinCounter));
             Will.setCurrentCoins(Will.getCurrentCoins() + 1);
-            ScaleTransition st = Animations.scaleTransition(big_coin , 500 , 3 , 3);
-            st.setOnFinished(actionEvent -> {Animations.scaleTransition(big_coin , 500 , -3 , -3);});
-            //coin.setThisCoinCollected(true);
+            System.out.println(Will.getCurrentCoins());
+            ScaleTransition st = Animations.scaleTransition(big_coin.getImg() , 500 , 2 , 2);
+            st.setOnFinished(actionEvent -> {Animations.scaleTransition(big_coin.getImg() , 500 , -2 , -2);});
         }
     }
     static void equipWeapon(){
@@ -350,9 +410,24 @@ public class HelloController implements Initializable {
         Weapon chestWeapon = weapon_Chest.getWeapon();
         if(chestWeapon.getName().equals("hammer")){
             weapon.getImg().setImage(chestWeapon.getJpg());
+            weapon.getImg().toFront();
+            weapon.getImg().setOpacity(10);
+
+            //System.out.println("bruh");
         }
         else{
-            weapon.getImg().setImage(chestWeapon.getImage());
+            weapon.setImage(chestWeapon.getImage());
+            weapon.getImg().setImage(chestWeapon.getJpg());
+            weapon.getImg().toFront();
+            weapon.getImg().setOpacity(10);
+            //System.out.println("bruh2");
+        }
+        Image openedChest = new Image("file:src/main/resources/com/example/demo1/ChestOpen.png");
+        weapon_Chest.getImg().setImage(openedChest);
+        if(Will.getWeaponArrayList().size() !=0){
+            if(!(Will.getWeaponArrayList().get(0).getName().equals(chestWeapon.getName()))){
+                Will.addToList(chestWeapon);
+            }
         }
         Will.setWeapon(chestWeapon);
         Will.setHasWeapon(true);

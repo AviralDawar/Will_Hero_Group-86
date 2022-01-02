@@ -2,10 +2,10 @@ package com.example.demo1;
 
 import javafx.scene.image.ImageView;
 
-public class Coin extends gameElements{
+public class TNT extends gameElements{
     public int[] position;
-    Boolean thisCoinCollected = false;
-    Coin(int[] position , ImageView img){
+    Boolean exploded = false;
+    TNT(int[] position , ImageView img){
         super(img);
         this.position = position;
     }
@@ -17,8 +17,12 @@ public class Coin extends gameElements{
         this.img = img;
     }
 
-    public void setThisCoinCollected(Boolean thisCoinCollected) {
-        this.thisCoinCollected = thisCoinCollected;
+    public void setExploded(Boolean exploded) {
+        this.exploded = exploded;
+    }
+
+    public Boolean getExploded() {
+        return exploded;
     }
 
     @Override

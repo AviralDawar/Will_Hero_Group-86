@@ -2,6 +2,8 @@ package com.example.demo1;
 
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
+
 public class Will extends gameElements{
     private int currentCoins;
     private int currentScore;
@@ -9,6 +11,7 @@ public class Will extends gameElements{
     public Boolean isAlive;
     private Boolean hasWeapon;
     private Weapon weapon;
+    private ArrayList<Weapon> weaponArrayList= new ArrayList<Weapon>();
 
 
     public Will(ImageView img){
@@ -28,6 +31,15 @@ public class Will extends gameElements{
         return weapon;
     }
 
+    public ArrayList<Weapon> getWeaponArrayList() {
+        return weaponArrayList;
+    }
+    public void addToList(Weapon weapon){
+        this.weaponArrayList.add(weapon);
+    }
+    public void removeFromList(Weapon weapon){
+
+    }
     public void setAlive(Boolean alive) {
         isAlive = alive;
     }

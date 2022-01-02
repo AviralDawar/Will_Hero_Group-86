@@ -6,6 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#moveBack" prefHeight="992.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.HelloController">
@@ -30,12 +31,12 @@
             <Image url="@island4.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="island2" fitHeight="116.0" fitWidth="251.0" layoutX="44.0" layoutY="286.0" opacity="0.81" pickOnBounds="true" preserveRatio="true" translateX="379.0">
+      <ImageView fx:id="island2" fitHeight="116.0" fitWidth="251.0" layoutY="286.0" opacity="0.81" pickOnBounds="true" preserveRatio="true" translateX="413.0">
          <image>
             <Image url="@island1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="island3" fitHeight="171.0" fitWidth="244.0" layoutX="6.0" layoutY="286.0" opacity="0.81" pickOnBounds="true" preserveRatio="true" translateX="746.0">
+      <ImageView fx:id="island3" fitHeight="171.0" fitWidth="244.0" layoutY="286.0" opacity="0.81" pickOnBounds="true" preserveRatio="true" translateX="752.0">
          <image>
             <Image url="@island2.png" />
          </image>
@@ -45,12 +46,12 @@
             <Image url="@Tree4-removebg-preview.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="tree2" fitHeight="57.0" fitWidth="26.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true" translateX="520.0">
+      <ImageView fx:id="tree2" fitHeight="57.0" fitWidth="26.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true" translateX="474.0">
          <image>
             <Image url="@Tree2-removebg-preview.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="tree3" fitHeight="75.0" fitWidth="60.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true" translateX="546.0">
+      <ImageView fx:id="tree3" fitHeight="75.0" fitWidth="60.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true" translateX="585.0">
          <image>
             <Image url="@Tree1-removebg-preview.png" />
          </image>
@@ -60,12 +61,12 @@
             <Image url="@Tree3-removebg-preview.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="redOrc" fitHeight="37.0" fitWidth="43.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true" translateX="459.0">
+      <ImageView fx:id="redOrc" fitHeight="37.0" fitWidth="43.0" layoutY="255.0" pickOnBounds="true" preserveRatio="true" translateX="246.0">
          <image>
             <Image url="@RedOrc1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="greenOrc" fitHeight="37.0" fitWidth="40.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true" translateX="610.0">
+      <ImageView fx:id="greenOrc" fitHeight="37.0" fitWidth="40.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true" translateX="513.0">
          <image>
             <Image url="@Orc1.png" />
          </image>
@@ -90,12 +91,7 @@
             <Image url="@Coin.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="will" fitHeight="37.0" fitWidth="70.0" layoutX="149.0" layoutY="254.0" onKeyPressed="#moveBack" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@hero.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="island4" fitHeight="171.0" fitWidth="254.0" layoutX="-20.0" layoutY="291.0" opacity="0.81" pickOnBounds="true" preserveRatio="true" translateX="1082.0">
+      <ImageView fx:id="island4" fitHeight="171.0" fitWidth="254.0" layoutY="291.0" opacity="0.81" pickOnBounds="true" preserveRatio="true" translateX="1062.0">
          <image>
             <Image url="@Islands3.png" />
          </image>
@@ -110,7 +106,7 @@
             <Image url="@Orc1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="redOrc1" fitHeight="42.0" fitWidth="50.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true" translateX="1135.0">
+      <ImageView fx:id="redOrc1" fitHeight="42.0" fitWidth="50.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true" translateX="1155.0">
          <image>
             <Image url="@RedOrc1.png" />
          </image>
@@ -145,9 +141,18 @@
             <Image url="@coinChest.jpeg" />
          </image>
       </ImageView>
+      <ImageView fx:id="wpn" fitHeight="39.0" fitWidth="26.0" layoutX="174.0" layoutY="252.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="28.5">
+         <image>
+            <Image url="@WeaponBrokenSword.png" />
+         </image></ImageView>
       <ImageView fx:id="weaponChest" fitHeight="46.0" fitWidth="60.0" layoutY="248.0" pickOnBounds="true" preserveRatio="true" translateX="770.0">
          <image>
             <Image url="@ChestClosed%20(1).png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="will" fitHeight="37.0" fitWidth="70.0" layoutX="123.0" layoutY="256.0" onKeyPressed="#moveBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@hero.png" />
          </image>
       </ImageView>
       <ImageView fx:id="gameOverImg" fitHeight="21.0" fitWidth="43.0" layoutX="456.0" layoutY="203.0" onMouseClicked="#backToMenu" opacity="0.0" pickOnBounds="true" preserveRatio="true">
@@ -181,7 +186,10 @@
                   <Font size="32.0" />
                </font>
             </Label>
-            <Label layoutX="106.0" layoutY="88.0" prefHeight="51.0" prefWidth="265.0" text="Label" />
+            <Label fx:id="resurrectLabel" layoutX="35.0" layoutY="74.0" prefHeight="90.0" prefWidth="432.0" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font></Label>
          </children>
       </Group>
       <Group fx:id="pause_Menu" layoutX="382.0" layoutY="466.0">
@@ -218,6 +226,27 @@
             </ImageView>
          </children>
       </Group>
-      <ImageView fitHeight="39.0" fitWidth="26.0" layoutX="197.0" layoutY="249.0" pickOnBounds="true" preserveRatio="true" rotate="28.5" />
+      <ImageView fx:id="TNT" fitHeight="42.0" fitWidth="51.0" layoutX="448.0" layoutY="492.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@TNT.png" />
+         </image>
+      </ImageView>
+      <Rectangle fx:id="swordButton" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="51.0" layoutX="53.0" layoutY="368.0" rotate="45.0" stroke="BLACK" strokeType="INSIDE" width="51.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="51.0" layoutX="140.0" layoutY="368.0" rotate="45.0" stroke="BLACK" strokeType="INSIDE" width="51.0" />
+      <ImageView fitHeight="52.0" fitWidth="15.0" layoutX="72.0" layoutY="368.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@WeaponSword.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="hammerButton" fitHeight="74.0" fitWidth="68.0" layoutX="132.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@hammer.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bossOrc" fitHeight="94.0" fitWidth="97.0" layoutX="642.0" layoutY="451.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@OrcBoss.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

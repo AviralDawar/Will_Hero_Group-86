@@ -71,11 +71,13 @@ public class MainMenuController implements Initializable {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         HelloController.pauseMenuUp = false;
         HelloController.gameStarted = false;
+        HelloController.clickToPlayActivated = true;
         HelloController.counter = 0;
 
 //        HelloController.addIsland(root);
         scene = new Scene(root ,915 , 437);
         stage.setScene(scene);
+        stage.setResizable(true);
         stage.show();
     }
     @FXML

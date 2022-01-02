@@ -8,4 +8,8 @@ public class Sword extends Weapon{
         super(img , type , power , jpg);
     }
 
+    @Override
+    public ImageView getImg() {
+        return super.getImg();
+    }
 }
