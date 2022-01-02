@@ -8,6 +8,7 @@ public abstract class gameElements extends ImageView {
     protected int Y_speed;
     protected ImageView img;
     protected Boolean isAlive = true;
+    private int x;
     gameElements(ImageView img){
         this.img = img;
     }
@@ -54,4 +55,12 @@ public abstract class gameElements extends ImageView {
     public Boolean getAlive() {
         return isAlive;
     }
+
+    public int get_X() {
+        return this.x;
+    }
+    public void set_X(int x){
+        this.x = x;
+    }
+
 }

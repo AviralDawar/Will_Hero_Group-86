@@ -7,15 +7,15 @@ public class Island extends gameElements{
     private final String name;
     public int[] position;
     private int x;
+
     Island(int length , int[] position , ImageView img , String name,int x){
         super(img);
         this.length = length;
         this.position = position;
         this.name = name;
         this.x = x;
-
-
     }
+
     public int get_X(){
         return this.x;
     }

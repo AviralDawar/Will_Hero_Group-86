@@ -8,6 +8,8 @@ public class Will extends gameElements{
     private Boolean hasResurrected;
     public Boolean isAlive;
     private Boolean hasWeapon;
+    private Weapon weapon;
+
 
     public Will(ImageView img){
         super(img);
@@ -18,7 +20,13 @@ public class Will extends gameElements{
         this.hasWeapon = false;
     }
 
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
 
+    public Weapon getWeapon() {
+        return weapon;
+    }
 
     public void setAlive(Boolean alive) {
         isAlive = alive;
@@ -88,4 +96,5 @@ public class Will extends gameElements{
     public int getCurrentScore() {
         return currentScore;
     }
+
 }
