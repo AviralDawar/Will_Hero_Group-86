@@ -6,10 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-
 public class Animations {
     public static void transition(Node node, int from, int to, int duration){
         FadeTransition fade = new FadeTransition();
@@ -109,7 +105,7 @@ public class Animations {
     }
     public static void checkWillFall(){
         while (HelloController.Will.isAlive) {
-            if (HelloController.Will.getImg().getTranslateY() > -3) {
+            if (HelloController.Will.getImg().getTranslateY() > -3 && HelloController.counter>3) {
                 Boolean willOnIsland = false;
                 for (Island island : HelloController.islandArray) {
                     ImageView will = HelloController.Will.getImg();
@@ -127,7 +123,6 @@ public class Animations {
     public static void checkOrcFall(){
         while(true) {
             String fallingOrc = null;
-
             for (Orc orc : HelloController.orcArrayList) {
                 Boolean orcOnIsland = false;
                 if (orc.getImg().getTranslateY() > -5) {
@@ -145,6 +140,31 @@ public class Animations {
                 }
             }
         }
+    }
+    private static Boolean gameOver = false;
+    public static void checkBossFall(){
+        Boolean orcOnIsland = false;
+        if (HelloController.boss_orc.getImg().getTranslateY() > -5) {
+            for (Island island : HelloController.islandArray) {
+                ImageView orcImg = HelloController.boss_orc.getImg();
+                if (orcImg.getLayoutX() + orcImg.getFitWidth() + orcImg.getTranslateX() - 45 >= island.getImg().getLayoutX() + island.getImg().getTranslateX() && orcImg.getLayoutX() + orcImg.getTranslateX() + 50 <= (island.getImg().getLayoutX() + island.getImg().getFitWidth() + island.getImg().getTranslateX())) {
+                    orcOnIsland = true;
+                    break;
+                }
+            }
+            if (!orcOnIsland && !gameOver) {
+                //System.out.println(orc.getType());
+                gameOver = true;
+                gameOver();
+
+            }
+        }
+    }
+    public static void checkBossCollision(){
+        if(HelloController.Will.getImg().getBoundsInParent().intersects(HelloController.boss_orc.getImg().getBoundsInParent())){
+            HelloController.boss_orc.getImg().setTranslateX(HelloController.boss_orc.getImg().getTranslateX() + 25);
+        }
+
     }
     public static TranslateTransition runTranslateTransitionElements(gameElements node, double x, double y, double duration , boolean infinite , boolean reverse) {
         if (node == null)
@@ -172,11 +192,14 @@ public class Animations {
                     int r = 20;
                     int rand = (int) ((Math.random() - 0.5) * 2 * r);
                     if(!(node instanceof Island)){
-                        rand = -6;
+                        rand = -4;
                     }
                     if(node instanceof Coin){
-                        node.setVisible(true);
-                        node.setOpacity(10);
+                        node.getImg().setVisible(true);
+                        node.getImg().setOpacity(10);
+                        //System.out.println("coin should appear");
+                        ((Coin) node).setThisCoinCollected(false);
+
                     }
                     if(node instanceof WeaponChest){
                         Image img = new Image("file:src/main/resources/com/example/demo1/ChestClosed.png");
@@ -207,7 +230,6 @@ public class Animations {
                 Animations.runTranslateTransition(HelloController.respawnMenu.getRespawnMenu(), 0, -550, 1000, false, false);
                 t.setOnFinished(actionEvent2 -> {
                     move_Back(-360 , 1);
-
                 });});
 
 
@@ -221,7 +243,6 @@ public class Animations {
             runTranslateTransition(orc.getImg(), 200, 0, 300, false, false);
             deathByOrc=false;
             orcToOrc(orc);
-
         }
     }
     public static void move_Back(int moveBy , int duration){
@@ -259,6 +280,7 @@ public class Animations {
 //            orc.getImg().setTranslateY(orc.getImg().getTranslateY() + 1);
 //        }
         orc.getImg().setTranslateX(90*15);
+        //HelloController.updateCoins(new Coin(new int[]{0,0} , null));
         //orc.getImg().setTranslateY(-30);
 //        for(int i = 0 ; i<300 ; i++){
 //            orc.getImg().setTranslateY(orc.getImg().getTranslateY() -1);

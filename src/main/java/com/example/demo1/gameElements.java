@@ -2,7 +2,9 @@ package com.example.demo1;
 
 import javafx.scene.image.ImageView;
 
-public abstract class gameElements extends ImageView {
+import java.io.Serializable;
+
+public abstract class gameElements extends ImageView implements Serializable {
     //protected int[] position;
     protected int X_speed;
     protected int Y_speed;

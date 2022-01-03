@@ -158,6 +158,10 @@ public class HelloController implements Initializable {
 
     @FXML
     void saveGame() {
+        for (gameElements object : allObjects) {
+            String filename = object.toString();
+            ProgressManager.serialize(object, filename);
+        }
     }
 
     @FXML
@@ -217,6 +221,7 @@ public class HelloController implements Initializable {
     private static Coin big_coin;
     public static Weapon weapon;
     public static TNT tnt;
+    public static Orc boss_orc;
 
 
     @Override
@@ -228,6 +233,7 @@ public class HelloController implements Initializable {
         bobbing[3] = Animations.runTranslateTransition(redOrc1, 0, -95, 1000, true, true);
         bobbing[4] = Animations.runTranslateTransition(greenOrc1, 0, -95, 1000, true, true);
         bobbing[5] = Animations.runTranslateTransition(wpn, 0 , -100 , 500 , true , true);
+
 
         gameOverImage = new GameOver(gameOverImg);
         Will = new Will(will);
@@ -261,6 +267,7 @@ public class HelloController implements Initializable {
         gOrc2 = new GreenOrc(0,"green2",true,0,0,greenOrc1);
         rOrc1 = new redOrc(0,"red1",true,0,0,redOrc);
         rOrc2 = new redOrc(0,"red2",true,0,0,redOrc1);
+        boss_orc = new GreenOrc(0 , "boss" , true ,0 , 0 , bossOrc);
 
         //for coins
         Coin coin1 = new Coin(position , c1);
@@ -302,6 +309,7 @@ public class HelloController implements Initializable {
 
         allObjects.add(coin_Chest);
         allObjects.add(weapon_Chest);
+        allObjects.add(boss_orc);
 
         orcArrayList[0] = gOrc1;
         orcArrayList[1] = gOrc2;
@@ -321,6 +329,8 @@ public class HelloController implements Initializable {
                     Animations.checkCollisionOrc();
                     Animations.checkCoinCollision();
                     Animations.checkChestCollision();
+                    //Animations.checkBossFall();
+                    Animations.checkBossCollision();
                     //Animations.orcToOrc();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -331,6 +341,7 @@ public class HelloController implements Initializable {
         collisionTimer.start();
         new Thread(() -> Animations.checkWillFall()).start();
         new Thread(() -> Animations.checkOrcFall()).start();
+        new Thread(()->Animations.checkBossFall());
     }
     public static Boolean clickToPlayActivated = true;
     public static int counter = 0;
@@ -354,22 +365,40 @@ public class HelloController implements Initializable {
 
             counter += 1;
             score.setText(String.valueOf(counter));
+            int x = 0;
+            int y = 0;
             if(counter == 25|| counter == 50 || counter == 75){
-                int x = 0;
-                int y = 0;
+
                 for(Island island : islandArray){
                     if(island.getImg().getTranslateX()>800){
                         x = (int) (island.getImg().getTranslateX() + island.getImg().getFitWidth()/2);
                         y = 252;
-                        System.out.println("entered if" +island);
+                        //System.out.println("entered if" +island);
                         break;
                     }
                 }
                 //System.out.println("TNT TRYING");
                 tnt.getImg().setLayoutY(y);
                 tnt.getImg().setLayoutX(x);
+            }
+            if(counter == 107){
+                for(Island island : islandArray){
+                    if(island.getImg().getTranslateX()>800){
+                        x = (int) (island.getImg().getTranslateX() + island.getImg().getFitWidth()/2);
+                        y = 212;
+                        //System.out.println("entered if" +island);
 
-
+                        break;
+                    }
+                }
+                System.out.println(x);
+                System.out.println(y);
+                boss_orc.getImg().setTranslateX(x);
+                boss_orc.getImg().setTranslateY(y);
+                Animations.runTranslateTransition(bossOrc , 0 , -30 , 1000 , true , true);
+            }
+            if(counter == 115){
+                Animations.gameOver();
             }
         }
     }
@@ -394,16 +423,24 @@ public class HelloController implements Initializable {
         if(!coin.thisCoinCollected) {
             coin.setThisCoinCollected(true);
             coinCounter++;
-            coin.getImg().setVisible(false);
+            coin.getImg().setOpacity(0);
             int r = 4;
             int rand = (int) ((Math.random() - 0.5) * 2 * r);
             //coin.getImg().setTranslateY(rand);
             coins_collected.getCoinsCollected().setText(String.valueOf(coinCounter));
             Will.setCurrentCoins(Will.getCurrentCoins() + 1);
-            System.out.println(Will.getCurrentCoins());
+            //System.out.println(Will.getCurrentCoins());
             ScaleTransition st = Animations.scaleTransition(big_coin.getImg() , 500 , 2 , 2);
             st.setOnFinished(actionEvent -> {Animations.scaleTransition(big_coin.getImg() , 500 , -2 , -2);});
         }
+    }
+    static void coinsFromChestOrc(){
+        coinCounter +=3;
+        coins_collected.getCoinsCollected().setText(String.valueOf(coinCounter));
+        Will.setCurrentCoins(Will.getCurrentCoins() + 3);
+//        ScaleTransition st = Animations.scaleTransition(big_coin.getImg() , 500 , 1 , 1);
+//        st.setOnFinished(actionEvent -> {Animations.scaleTransition(big_coin.getImg() , 500 , -1 , -1);});
+
     }
     static void equipWeapon(){
 
